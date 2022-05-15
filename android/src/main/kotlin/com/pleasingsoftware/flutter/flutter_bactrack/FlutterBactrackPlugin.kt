@@ -128,9 +128,9 @@ class FlutterBactrackPlugin : FlutterPlugin, PluginRegistry.RequestPermissionsRe
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>?,
-        grantResults: IntArray?
+            requestCode: Int,
+            permissions: Array<out String>?,
+            grantResults: IntArray?
     ): Boolean {
         Log.i(tag, "BACtrack plugin onRequestPermissionsResult: code $requestCode, permissions: ${permissions?.joinToString() ?: "null"}, grantResults: ${grantResults?.joinToString() ?: "null"}")
         return when (requestCode) {
@@ -284,8 +284,8 @@ class FlutterBactrackPlugin : FlutterPlugin, PluginRegistry.RequestPermissionsRe
         override fun BACtrackFoundBreathalyzer(bacTrackDevice: BACtrackDevice) {
             // TODO - add devices to a map as they're found so we can connect to them later
             invokeChannelMethodOnMainThread(
-                foundBreathalyzerMethod,
-                "${bacTrackDevice.type.name}@${bacTrackDevice.device.address}"
+                    foundBreathalyzerMethod,
+                    "${bacTrackDevice.type.name}@${bacTrackDevice.device.address}"
             )
         }
 
@@ -297,7 +297,7 @@ class FlutterBactrackPlugin : FlutterPlugin, PluginRegistry.RequestPermissionsRe
             invokeChannelMethodOnMainThread(startBlowingMethod, null)
         }
 
-        override fun BACtrackBlow() {
+        override fun BACtrackBlow(p0: Float) {
             invokeChannelMethodOnMainThread(keepBlowingMethod, null)
         }
 
@@ -345,10 +345,10 @@ class FlutterBactrackPlugin : FlutterPlugin, PluginRegistry.RequestPermissionsRe
         }
 
         if (
-            isPermissionGranted(pluginActivity!!, Manifest.permission.BLUETOOTH) &&
-            isPermissionGranted(pluginActivity!!, Manifest.permission.BLUETOOTH_ADMIN) &&
-            isPermissionGranted(pluginActivity!!, Manifest.permission.ACCESS_FINE_LOCATION) &&
-            isPermissionGranted(pluginActivity!!, Manifest.permission.ACCESS_NETWORK_STATE)
+                isPermissionGranted(pluginActivity!!, Manifest.permission.BLUETOOTH) &&
+                isPermissionGranted(pluginActivity!!, Manifest.permission.BLUETOOTH_ADMIN) &&
+                isPermissionGranted(pluginActivity!!, Manifest.permission.ACCESS_FINE_LOCATION) &&
+                isPermissionGranted(pluginActivity!!, Manifest.permission.ACCESS_NETWORK_STATE)
         ) {
             Log.i(tag, "BACtrack plugin checkPermissions(): permissions have already been granted")
             return true
@@ -357,10 +357,10 @@ class FlutterBactrackPlugin : FlutterPlugin, PluginRegistry.RequestPermissionsRe
         Log.i(tag, "BACtrack plugin checkPermissions(): requesting permissions")
 
         val perms = arrayOf(
-            Manifest.permission.BLUETOOTH,
-            Manifest.permission.BLUETOOTH_ADMIN,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_NETWORK_STATE
+                Manifest.permission.BLUETOOTH,
+                Manifest.permission.BLUETOOTH_ADMIN,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_NETWORK_STATE
         )
 
         pluginActivity!!.requestPermissions(perms, pluginPermissionCode)
@@ -368,13 +368,13 @@ class FlutterBactrackPlugin : FlutterPlugin, PluginRegistry.RequestPermissionsRe
     }
 
     private fun isPermissionGranted(activity: Activity, permStr: String) =
-        ContextCompat.checkSelfPermission(activity, permStr) == PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(activity, permStr) == PackageManager.PERMISSION_GRANTED
 
     private fun handlePermissionResult(grantResults: IntArray?): Boolean {
         Log.i(tag, "BACtrack plugin: handlePermissionResult: grantResults: ${grantResults?.joinToString() ?: "null"}")
 
         val permissionGranted = grantResults?.isNotEmpty() == true &&
-            grantResults[0] == PackageManager.PERMISSION_GRANTED
+                grantResults[0] == PackageManager.PERMISSION_GRANTED
 
         Log.i(tag, "BACtrack plugin permissions granted? $permissionGranted")
         apiInitializer(permissionGranted)
