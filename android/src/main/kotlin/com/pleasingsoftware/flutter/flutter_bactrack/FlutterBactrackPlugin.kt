@@ -129,8 +129,8 @@ class FlutterBactrackPlugin : FlutterPlugin, PluginRegistry.RequestPermissionsRe
 
     override fun onRequestPermissionsResult(
             requestCode: Int,
-            permissions: Array<out String>?,
-            grantResults: IntArray?
+            permissions: Array<out String>,
+            grantResults: IntArray
     ): Boolean {
         Log.i(tag, "BACtrack plugin onRequestPermissionsResult: code $requestCode, permissions: ${permissions?.joinToString() ?: "null"}, grantResults: ${grantResults?.joinToString() ?: "null"}")
         return when (requestCode) {
@@ -370,10 +370,10 @@ class FlutterBactrackPlugin : FlutterPlugin, PluginRegistry.RequestPermissionsRe
     private fun isPermissionGranted(activity: Activity, permStr: String) =
             ContextCompat.checkSelfPermission(activity, permStr) == PackageManager.PERMISSION_GRANTED
 
-    private fun handlePermissionResult(grantResults: IntArray?): Boolean {
+    private fun handlePermissionResult(grantResults: IntArray): Boolean {
         Log.i(tag, "BACtrack plugin: handlePermissionResult: grantResults: ${grantResults?.joinToString() ?: "null"}")
 
-        val permissionGranted = grantResults?.isNotEmpty() == true &&
+        val permissionGranted = grantResults.isNotEmpty() == true &&
                 grantResults[0] == PackageManager.PERMISSION_GRANTED
 
         Log.i(tag, "BACtrack plugin permissions granted? $permissionGranted")
