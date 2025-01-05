@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'flutter_bactrack'
-  s.version          = '0.0.1'
+  s.version          = '0.0.2'
   s.summary          = 'A flutter plugin for the BACtrack breathalyzer.'
   s.description      = <<-DESC
 A flutter plugin for the BACtrack breathalyzer.
@@ -20,14 +20,5 @@ A flutter plugin for the BACtrack breathalyzer.
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'VALID_ARCHS[sdk=iphonesimulator*]' => 'x86_64' }
   s.swift_version = '5.0'
-  
-  s.subspec 'BacTrack' do |bt|
-    bt.preserve_paths = 'libs/*.h'
-    bt.vendored_libraries = 'libs/libBACtrackSDK.a'
-    bt.libraries = 'BACtrackSDK'
-    bt.xcconfig = { 
-      'HEADER_SEARCH_PATHS' => "${PODS_ROOT}/../.symlinks/plugins/flutter_bactrack/ios/libs",
-      'ENABLE_BITCODE' => "NO"
-    }
-  end
+
 end
